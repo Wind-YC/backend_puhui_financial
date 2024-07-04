@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qst.system.mapper.LoaMapper">
+    <select id="selectLoaMoney" resultType="java.lang.Long">
+        select sum(loa_money) from loans where loa_del = 0 and loa_state = 7
+    </select>
+    <select id="selectLoaCount" resultType="java.lang.Integer">
+        select count(loa_id) from loans where loa_del = 0
+    </select>
+</mapper>

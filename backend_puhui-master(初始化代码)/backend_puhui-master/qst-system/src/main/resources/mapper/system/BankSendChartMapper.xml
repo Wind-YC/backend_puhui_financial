@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qst.system.mapper.BankSendChartMapper">
+
+    <resultMap id="CompanyResult" type="company">
+        <result column="com_id" property="comId"/>
+        <result column="com_no" property="comNo"/>
+        <result column="com_name" property="comName"/>
+        <result column="com_email" property="comEmail"/>
+        <result column="com_phone" property="comPhone"/>
+        <result column="com_pwd" property="comPwd"/>
+        <result column="com_remake" property="comRemark"/>
+        <result column="com_status" property="comStatus"/>
+    </resultMap>
+
+    <resultMap id="BankResult" type="bank">
+        <result column="bank_id" property="bankId"/>
+        <result column="bank_name" property="bankName"/>
+        <result column="bank_email" property="bankEmail"/>
+        <result column="bank_password" property="bankPassword"/>
+        <result column="bank_rate" property="bankRate"/>
+        <result column="bank_phone" property="bankPhone"/>
+        <result column="bank_length" property="bankLength"/>
+        <result column="bank_pro_id" property="bankProId"/>
+        <result column="bank_cit_id" property="bankCitId"/>
+        <result column="bank_ara_id" property="bankAraId"/>
+        <result column="bank_bz" property="bankBz"/>
+    </resultMap>
+
+    <resultMap id="LoansResult" type="loans">
+        <result column="loa_id" property="loaId"/>
+        <result column="loa_no" property="loaNo"/>
+        <result column="loa_com_no" property="loaComNo"/>
+        <result column="loa_bank_id" property="loaBankId"/>
+        <result column="loa_lis_id" property="loaLisId"/>
+        <result column="loa_use" property="loaUse"/>
+        <result column="loa_integral" property="loaIntegral"/>
+        <result column="loa_rate" property="loaRate"/>
+        <result column="loa_state" property="loaState"/>
+        <result column="loa_time" property="loaTime"/>
+        <result column="loa_money" property="loaMoney"/>
+        <result column="loa_end_time" property="loaEndTime"/>
+    </resultMap>
+
+    <resultMap id="BankSendResult" type="bankSend">
+        <result column="sen_id" property="senId"/>
+        <result column="sen_bank_id" property="senBankId"/>
+        <result column="sen_loa_id" property="senLoaId"/>
+        <result column="sen_com_id" property="senComId"/>
+        <result column="sen_account" property="senAccount"/>
+        <result column="sen_uname" property="senUname"/>
+        <result column="sen_uid" property="senUid"/>
+        <result column="sen_money" property="senMoney"/>
+        <result column="sen_time" property="senTime"/>
+        <result column="sen_mode" property="senMode"/>
+        <result column="sen_status" property="senStatus"/>
+        <result column="sen_del" property="senDel"/>
+        <association property="company" javaType="company" resultMap="CompanyResult"/>
+        <association property="bank" javaType="bank" resultMap="BankResult"/>
+        <association property="loans" javaType="loans" resultMap="LoansResult"/>
+    </resultMap>
+
+    <sql id="selectBankSendChartVO">
+        select sen_id,
+               sen_bank_id,
+               sen_loa_id,
+               sen_com_id,
+               sen_account,
+               sen_uname,
+               sen_uid,
+               sen_money,
+               sen_time,
+               sen_mode,
+               sen_status,
+               sen_del,
+               com_name,
+               bank_name,
+               loa_no
+        from bank_send s
+                 left join company c on s.sen_com_id = c.com_id
+                 left join bank b on s.sen_bank_id = b.bank_id
+                 left join loans l on s.sen_loa_id = l.loa_id
+    </sql>
+
+    <select id="selectBankSendChartList" resultMap="BankSendResult">
+        <include refid="selectBankSendChartVO" />
+        <where>
+            <if test="senBankId != null">and sen_bank_id = #{senBankId}</if>
+            <if test="senLoaId != null">and sen_loa_id #{senLoaId}</if>
+            <if test="senComId != null">and sen_com_id #{senComId}</if>
+            <if test="senUname != null and senUname != '' ">and sen_uname like concat('%',#{senUname},'%')</if>
+            <if test="senUid != null  and senUid != ''">and sen_uid like concat('%', #{senUid}, '%')</if>
+            <if test="senMoney != null  and senMoney != ''">and sen_money = #{senMoney}</if>
+            <if test="senTime != null ">and sen_time = #{senTime}</if>
+            <if test="senMode != null  and senMode != ''">and sen_mode = #{senMode}</if>
+            <if test="senStatus != null  and senStatus != ''">and sen_status = #{senStatus}</if>
+        </where>
+        order by sen_time;
+    </select>
+</mapper>
