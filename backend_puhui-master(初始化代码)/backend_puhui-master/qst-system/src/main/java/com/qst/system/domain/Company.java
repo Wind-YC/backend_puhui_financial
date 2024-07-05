@@ -1,16 +1,19 @@
 package com.qst.system.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.qst.common.core.domain.BaseEntity;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
 
+@ApiModel("公司实体类")
 public class Company extends BaseEntity {
   private static final long serialVersionUID = 1L;
 
 
-  @ApiModelProperty(value = "主键")
+  @ApiModelProperty(value = "公司ID")
   private Integer comId;
 
   @ApiModelProperty(value = "企业编号")
@@ -29,19 +32,18 @@ public class Company extends BaseEntity {
   private String comPwd;
 
   @ApiModelProperty(value = "注册时间")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private Date comTime;
 
   @ApiModelProperty(value = "备注、激活码")
   private String comRemark;
 
-  @ApiModelProperty(value = "公司状态")
+  @ApiModelProperty(value = "公司状态 0 正常,1 停用, 2 未激活")
   private String comStatus;
 
   @ApiModelProperty(value = "删除状态")
   private String comDel;
 
-  @ApiModelProperty(value = "银行卡号")
-  private String comCard;
 
   public Integer getComId() {
     return comId;
@@ -123,13 +125,6 @@ public class Company extends BaseEntity {
     this.comDel = comDel;
   }
 
-  public String getComCard() {
-    return comCard;
-  }
-
-  public void setComCard(String comCard) {
-    this.comCard = comCard;
-  }
 
   @Override
   public String toString() {
@@ -144,7 +139,6 @@ public class Company extends BaseEntity {
             ", comRemark='" + comRemark + '\'' +
             ", comStatus='" + comStatus + '\'' +
             ", comDel='" + comDel + '\'' +
-            ", comCard='" + comCard + '\'' +
             '}';
   }
 }
