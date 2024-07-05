@@ -8,4 +8,12 @@ public interface CompanyMapper {
     //查询公司总数量
     int selectCompanyCount();
     List<Company> selectCompanyList(Company company);
+
+    List<Company> selectCompanyName();
+
+    int insertCompany(Company company);
+
+    Company selectCompanyById(Integer id);
+
+    int updateCompany(Company company);
 }

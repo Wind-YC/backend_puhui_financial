@@ -16,4 +16,10 @@ public class ComDetailsServiceImpl implements IComDetailsService {
     public List<ComDetails> selectComDetails(ComDetails comDetails) {
         return comDetailsMapper.selectComDetailsList(comDetails);
     }
+
+    @Override
+    public ComDetails selectComDetailsById(Integer cId) {
+        return comDetailsMapper.selectComDetailsById(cId);
+    }
+
 }

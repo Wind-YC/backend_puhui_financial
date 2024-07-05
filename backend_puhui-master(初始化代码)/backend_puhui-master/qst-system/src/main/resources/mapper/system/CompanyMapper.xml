@@ -24,6 +24,23 @@
                com_del
         from company
     </sql>
+    <insert id="insertCompany">
+        insert into company(com_no,com_name,com_email,com_phone,com_status
+            <if test="comPwd!=null and comPwd!=''">,com_pwd</if>
+        )values(#{comNo},#{comName},#{comEmail},#{comPhone},#{comStatus}
+            <if test="comPwd!=null and comPwd!=''">,#{comPwd}</if>
+        )
+    </insert>
+    <update id="updateCompany">
+        update company
+        set com_no=#{comNo},
+            com_name=#{comName},
+            com_email=#{comEmail},
+            com_phone=#{comPhone},
+            com_status=#{comStatus}
+        <if test="comPwd!=null and comPwd!=''">,com_pwd=#{comPwd}</if>
+        where com_id=#{comId}
+    </update>
 
     <select id="selectCompanyCount" resultType="java.lang.Integer">
         select count(com_id) from company where com_del = 0
@@ -42,6 +59,14 @@
             <if test="comDel != null  and comDel != ''">and com_del = #{comDel}</if>
         </where>
         order by com_no
+    </select>
+    <select id="selectCompanyName" resultMap="CompanyResult">
+        <include refid="selectCompanyVo" />
+        where com_status = 3
+    </select>
+    <select id="selectCompanyById" resultMap="CompanyResult">
+        <include refid="selectCompanyVo"/>
+        where com_id = #{cid}
     </select>
 
 </mapper>

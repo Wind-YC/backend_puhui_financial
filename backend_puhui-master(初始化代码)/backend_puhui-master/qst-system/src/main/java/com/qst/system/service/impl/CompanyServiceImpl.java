@@ -24,4 +24,27 @@ public class CompanyServiceImpl implements ICompanyService {
     public List<Company> selectCompanyList(Company company) {
         return companyMapper.selectCompanyList(company);
     }
+
+    @Override
+    public List<Company> selectCompanyName() {
+        return companyMapper.selectCompanyName();
+    }
+
+    @Override
+    public int insertCompany(Company company) {
+        return companyMapper.insertCompany(company);
+    }
+
+    @Override
+    public Company selectCompanyById(Integer cid) {
+        return companyMapper.selectCompanyById(cid);
+
+    }
+
+    @Override
+    public int updateCompany(Company company) {
+        return companyMapper.updateCompany(company);
+    }
+
+
 }

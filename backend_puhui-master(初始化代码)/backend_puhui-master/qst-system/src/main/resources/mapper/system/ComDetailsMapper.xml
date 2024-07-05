@@ -99,6 +99,10 @@
             <if test="cLicTime != null ">and c_lic_time = #{cLicTime}</if>
         </where>
     </select>
+    <select id="selectComDetailsById" resultMap="ComDetailsResult">
+        <include refid="selectCompanyDetailsVo" />
+            where c_id = #{cId}
+    </select>
 
 
 </mapper>
