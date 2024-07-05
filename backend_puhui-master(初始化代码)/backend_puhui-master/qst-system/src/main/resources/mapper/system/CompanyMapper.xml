@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.qst.system.mapper.CompanyMapper">
-
-    <resultMap type="Company" id="CompanyResult">
-        <result property="comId" column="com_id"/>
+    <resultMap id="CompanyResult" type="Company">
+        <id column="com_id" property="comId"/>
         <result property="comNo" column="com_no"/>
         <result property="comName" column="com_name"/>
         <result property="comEmail" column="com_email"/>
@@ -13,7 +12,6 @@
         <result property="comStatus" column="com_status"/>
         <result property="comDel" column="com_del"/>
     </resultMap>
-
     <sql id="selectCompanyVo">
         select com_id,
                com_no,
@@ -31,9 +29,9 @@
         select count(com_id) from company where com_del = 0
     </select>
     <select id="selectCompanyList" resultMap="CompanyResult">
-        <include refid="selectCompanyVo" />
+        <include refid="selectCompanyVo"/>
         <where>
-            com_del = 0
+            com_del=0
             <if test="comNo != null  and comNo != ''">and com_no = #{comNo}</if>
             <if test="comName != null  and comName != ''">and com_name like concat('%', #{comName}, '%')</if>
             <if test="comEmail != null  and comEmail != ''">and com_email = #{comEmail}</if>
@@ -45,4 +43,5 @@
         </where>
         order by com_no
     </select>
+
 </mapper>
