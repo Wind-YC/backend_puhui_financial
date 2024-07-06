@@ -38,9 +38,20 @@
             com_email=#{comEmail},
             com_phone=#{comPhone},
             com_status=#{comStatus}
-        <if test="comPwd!=null and comPwd!=''">,com_pwd=#{comPwd}</if>
+        <choose>
+            <when test="comPwd!=null and comPwd!=''">,com_pwd=#{comPwd}</when>
+            <otherwise>,com_pwd=''</otherwise>
+        </choose>
+
         where com_id=#{comId}
     </update>
+    <delete id="deleteCompanyById">
+        delete from company where com_id in
+        <foreach item="item" index="index" collection="list"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
 
     <select id="selectCompanyCount" resultType="java.lang.Integer">
         select count(com_id) from company where com_del = 0

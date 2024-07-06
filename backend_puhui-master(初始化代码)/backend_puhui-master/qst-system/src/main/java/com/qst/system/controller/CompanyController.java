@@ -37,6 +37,10 @@ public class CompanyController extends BaseController {
     public AjaxResult update(@RequestBody Company company){
         return toAjax(companyService.updateCompany(company));
     }
+    @DeleteMapping("/{cid}")
+    public AjaxResult delete(@PathVariable("cid") List<Integer> cid){
+        return AjaxResult.success(companyService.deleteCompanyById(cid));
+    }
 
 
 }

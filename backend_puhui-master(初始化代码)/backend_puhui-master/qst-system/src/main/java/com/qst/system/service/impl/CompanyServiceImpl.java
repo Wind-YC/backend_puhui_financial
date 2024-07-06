@@ -46,5 +46,10 @@ public class CompanyServiceImpl implements ICompanyService {
         return companyMapper.updateCompany(company);
     }
 
+    @Override
+    public int deleteCompanyById(List<Integer> cid) {
+        return companyMapper.deleteCompanyById(cid);
+    }
+
 
 }

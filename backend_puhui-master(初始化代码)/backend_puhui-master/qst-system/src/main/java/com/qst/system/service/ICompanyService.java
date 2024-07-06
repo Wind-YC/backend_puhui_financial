@@ -14,4 +14,6 @@ public interface ICompanyService {
     Company selectCompanyById(Integer cid);
 
     int updateCompany(Company company);
+
+    int deleteCompanyById(List<Integer> cid);
 }

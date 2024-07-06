@@ -16,4 +16,6 @@ public interface CompanyMapper {
     Company selectCompanyById(Integer id);
 
     int updateCompany(Company company);
+
+    int deleteCompanyById(List<Integer> cid);
 }
