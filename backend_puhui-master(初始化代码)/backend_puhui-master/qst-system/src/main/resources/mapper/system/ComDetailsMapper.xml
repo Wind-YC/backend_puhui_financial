@@ -79,6 +79,82 @@
                  left join provinces p on d.c_pro = p.provinceid
                  left join cities t on d.c_city = t.cityid
     </sql>
+    <insert id="addComDetails">
+        insert into com_details (
+        <if test="coId != null and coId != ''">co_id</if>
+        <if test="cIntegral != null and cIntegral != ''">,c_integral</if>
+        <if test="cLicense != null and cLicense != ''">,c_license</if>
+        <if test="cType != null and cType != ''">,c_type</if>
+        <if test="cLegalName != null and cLegalName != ''">,c_legal_name</if>
+        <if test="cLegalId != null and cLegalId != ''">,c_legal_id</if>
+        <if test="cLegalImg != null and cLegalImg != ''">,c_legal_img</if>
+        <if test="cLegalTime != null">,c_legal_time</if>
+        <if test="cPro != null and cPro != ''">,c_pro</if>
+        <if test="cCity != null and cCity != ''">,c_city</if>
+        <if test="cAddress != null and cAddress != ''">,c_address</if>
+        <if test="cBusSco != null and cBusSco != ''">,c_bus_sco</if>
+        <if test="cLicTime != null">,c_lic_time</if>
+        ) values (
+        <if test="coId != null and coId != ''">#{coId}</if>
+        <if test="cIntegral != null and cIntegral != ''">,#{cIntegral}</if>
+        <if test="cLicense != null and cLicense != ''">,#{cLicense}</if>
+        <if test="cType != null and cType != ''">,#{cType}</if>
+        <if test="cLegalName != null and cLegalName != ''">,#{cLegalName}</if>
+        <if test="cLegalId != null and cLegalId != ''">,#{cLegalId}</if>
+        <if test="cLegalImg != null and cLegalImg != ''">,#{cLegalImg}</if>
+        <if test="cLegalTime != null">,#{cLegalTime}</if>
+        <if test="cPro != null and cPro != ''">,#{cPro}</if>
+        <if test="cCity != null and cCity != ''">,#{cCity}</if>
+        <if test="cAddress != null and cAddress != ''">,#{cAddress}</if>
+        <if test="cBusSco != null and cBusSco != ''">,#{cBusSco}</if>
+        <if test="cLicTime != null">,#{cLicTime}</if>
+        )
+    </insert>
+    <update id="updateComStatusTo5">
+        update company
+        set com_status=5
+        where com_id=#{coId}
+    </update>
+    <update id="updateComStatusTo3">
+        update company
+        set com_status = 3
+        where com_id in (
+        select co_id from com_details
+        where c_id in
+        <foreach collection="list" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+        )
+    </update>
+    <update id="updateComDetails">
+        UPDATE com_details
+        <set>
+            <trim prefix="" suffixOverrides=",">
+                co_id = #{coId},
+                c_integral = #{cIntegral},
+                c_license = #{cLicense},
+                c_type = #{cType},
+                c_legal_name = #{cLegalName},
+                c_legal_id = #{cLegalId},
+                c_legal_img = #{cLegalImg},
+                c_legal_time = #{cLegalTime},
+                c_pro = #{cPro},
+                c_city = #{cCity},
+                c_address = #{cAddress},
+                c_bus_sco = #{cBusSco},
+                c_lic_time = #{cLicTime},
+            </trim>
+        </set>
+        WHERE
+        c_id = #{cId}
+    </update>
+
+
+
+    <delete id="deleteCompanyById">
+        delete from com_details
+        where c_id in <foreach collection="list" item="id" open="(" close=")" separator=",">#{id}</foreach>
+    </delete>
     <select id="selectComDetailsList" resultMap="ComDetailsResult">
         <include refid="selectCompanyDetailsVo" />
         <where>

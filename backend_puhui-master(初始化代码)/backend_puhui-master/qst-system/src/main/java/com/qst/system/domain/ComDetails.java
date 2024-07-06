@@ -37,7 +37,7 @@ public class ComDetails extends BaseEntity {
   private String cLegalImg;
 
   @ApiModelProperty(value = "有效期限")
-  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  @JsonFormat(pattern = "yyyy-MM-dd")
   private Date cLegalTime;
 
   @ApiModelProperty(value = "注册省")
@@ -53,37 +53,13 @@ public class ComDetails extends BaseEntity {
   private String cBusSco;
 
   @ApiModelProperty(value = "营业执照到期时间")
-  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  @JsonFormat(pattern = "yyyy-MM-dd")
   private Date cLicTime;
 
   @ApiModelProperty(value = "删除标识 0 存在 2 删除")
   private String cDel;
 
   private Cities cities;
-
-  @Override
-  public String toString() {
-    return "ComDetails{" +
-            "cId=" + cId +
-            ", coId=" + coId +
-            ", cIntegral='" + cIntegral + '\'' +
-            ", cLicense='" + cLicense + '\'' +
-            ", cType='" + cType + '\'' +
-            ", cLegalName='" + cLegalName + '\'' +
-            ", cLegalId='" + cLegalId + '\'' +
-            ", cLegalImg='" + cLegalImg + '\'' +
-            ", cLegalTime=" + cLegalTime +
-            ", cPro='" + cPro + '\'' +
-            ", cCity='" + cCity + '\'' +
-            ", cAddress='" + cAddress + '\'' +
-            ", cBusSco='" + cBusSco + '\'' +
-            ", cLicTime=" + cLicTime +
-            ", cDel='" + cDel + '\'' +
-            ", cities=" + cities +
-            ", provinces=" + provinces +
-            ", company=" + company +
-            '}';
-  }
 
   public Cities getCities() {
     return cities;
@@ -112,6 +88,7 @@ public class ComDetails extends BaseEntity {
   private Provinces provinces;
 
   private Company company;
+
   public Integer getcId() {
     return cId;
   }
@@ -232,4 +209,27 @@ public class ComDetails extends BaseEntity {
     this.cDel = cDel;
   }
 
+  @Override
+  public String toString() {
+    return "ComDetails{" +
+            "cId=" + cId +
+            ", coId=" + coId +
+            ", cIntegral='" + cIntegral + '\'' +
+            ", cLicense='" + cLicense + '\'' +
+            ", cType='" + cType + '\'' +
+            ", cLegalName='" + cLegalName + '\'' +
+            ", cLegalId='" + cLegalId + '\'' +
+            ", cLegalImg='" + cLegalImg + '\'' +
+            ", cLegalTime=" + cLegalTime +
+            ", cPro='" + cPro + '\'' +
+            ", cCity='" + cCity + '\'' +
+            ", cAddress='" + cAddress + '\'' +
+            ", cBusSco='" + cBusSco + '\'' +
+            ", cLicTime=" + cLicTime +
+            ", cDel='" + cDel + '\'' +
+            ", cities=" + cities +
+            ", provinces=" + provinces +
+            ", company=" + company +
+            '}';
+  }
 }

@@ -7,13 +7,11 @@ import com.qst.system.domain.ComDetails;
 import com.qst.system.service.IComDetailsService;
 import com.qst.system.service.ICompanyService;
 import com.qst.system.service.IProvincesService;
-import com.qst.system.service.impl.ProvincesServiceImpl;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Api("企业控制类")
 @RestController
@@ -48,4 +46,25 @@ public class ComDetailsController extends BaseController {
     public AjaxResult selectCompanies(@PathVariable("cID") Integer cid){
         return AjaxResult.success(comDetailsService.selectComDetailsById(cid));
     }
+
+    @GetMapping("/{cID}")
+    public AjaxResult selectCompaniesById(@PathVariable("cID") Integer cid){
+        return AjaxResult.success(comDetailsService.selectComDetailsById(cid));
+    }
+    @DeleteMapping("/{cID}")
+    public AjaxResult deleteCompaniesById(@PathVariable("cID") List<Integer> cid){
+        comDetailsService.updateComStatusTo3(cid);
+
+        return toAjax(comDetailsService.deleteCompanyById(cid));
+    }
+    @PostMapping
+    public AjaxResult add(@RequestBody ComDetails comDetails){
+        comDetailsService.addComDetails(comDetails);
+        return toAjax(comDetailsService.updateComStatusTo5(comDetails));
+    }
+    @PutMapping
+    public AjaxResult update(@RequestBody ComDetails comDetails){
+        return toAjax(comDetailsService.updateComDetails(comDetails));
+    }
+
 }
