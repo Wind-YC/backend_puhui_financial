@@ -79,5 +79,9 @@
         <include refid="selectCompanyVo"/>
         where com_id = #{cid}
     </select>
+    <select id="selectAllComName" resultMap="CompanyResult">
+        <include refid="selectCompanyVo"/>
+            where com_del=0
+    </select>
 
 </mapper>

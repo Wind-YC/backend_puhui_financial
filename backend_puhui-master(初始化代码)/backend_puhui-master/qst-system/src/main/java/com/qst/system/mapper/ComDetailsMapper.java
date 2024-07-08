@@ -18,4 +18,5 @@ public interface ComDetailsMapper{
     int updateComStatusTo3(List<Integer> id);
 
     int updateComDetails(ComDetails comDetails);
+
 }
