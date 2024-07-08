@@ -1,6 +1,9 @@
 package com.qst.system.domain;
 
 import com.qst.common.core.domain.BaseEntity;
+import com.qst.common.core.domain.entity.Areas;
+import com.qst.common.core.domain.entity.Cities;
+import com.qst.common.core.domain.entity.Provinces;
 import io.swagger.annotations.ApiModelProperty;
 
 public class Bank extends BaseEntity {
@@ -45,6 +48,55 @@ public class Bank extends BaseEntity {
 
     @ApiModelProperty(value = "贷款产品说明")
     private String bankBz;
+    private Provinces provinces;
+    private Cities cities;
+    private Areas areas;
+
+    @Override
+    public String toString() {
+        return "Bank{" +
+                "bankId=" + bankId +
+                ", bankName='" + bankName + '\'' +
+                ", bankEmail='" + bankEmail + '\'' +
+                ", bankPassword='" + bankPassword + '\'' +
+                ", bankRate='" + bankRate + '\'' +
+                ", bankPhone='" + bankPhone + '\'' +
+                ", bankLength='" + bankLength + '\'' +
+                ", bankProId='" + bankProId + '\'' +
+                ", bankCitId='" + bankCitId + '\'' +
+                ", bankAraId='" + bankAraId + '\'' +
+                ", bankAdress='" + bankAdress + '\'' +
+                ", bankDel='" + bankDel + '\'' +
+                ", bankBz='" + bankBz + '\'' +
+                ", provinces=" + provinces +
+                ", cities=" + cities +
+                ", areas=" + areas +
+                '}';
+    }
+
+    public Provinces getProvinces() {
+        return provinces;
+    }
+
+    public void setProvinces(Provinces provinces) {
+        this.provinces = provinces;
+    }
+
+    public Cities getCities() {
+        return cities;
+    }
+
+    public void setCities(Cities cities) {
+        this.cities = cities;
+    }
+
+    public Areas getAreas() {
+        return areas;
+    }
+
+    public void setAreas(Areas areas) {
+        this.areas = areas;
+    }
 
     public Integer getBankId() {
         return bankId;
@@ -150,22 +202,4 @@ public class Bank extends BaseEntity {
         this.bankBz = bankBz;
     }
 
-    @Override
-    public String toString() {
-        return "Bank{" +
-                "bankId=" + bankId +
-                ", bankName='" + bankName + '\'' +
-                ", bankEmail='" + bankEmail + '\'' +
-                ", bankPassword='" + bankPassword + '\'' +
-                ", bankRate='" + bankRate + '\'' +
-                ", bankPhone='" + bankPhone + '\'' +
-                ", bankLength='" + bankLength + '\'' +
-                ", bankProId='" + bankProId + '\'' +
-                ", bankCitId='" + bankCitId + '\'' +
-                ", bankAraId='" + bankAraId + '\'' +
-                ", bankAdress='" + bankAdress + '\'' +
-                ", bankDel='" + bankDel + '\'' +
-                ", bankBz='" + bankBz + '\'' +
-                '}';
-    }
 }
