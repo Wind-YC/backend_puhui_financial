@@ -45,10 +45,29 @@
             </if>
         )
     </insert>
+    <update id="update">
+        update score
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="comId!=null and comId!=''">
+                com_id=#{comId},
+                <if test="scoreNum!=null and scoreNum!=''">score_num=#{scoreNum},</if>
+                <if test="updateDetail!=null and updateDetail!=''">update_detail=#{updateDetail},</if>
+            </if>
+        </trim>
+        where score_id=#{scoreId}
+    </update>
+    <delete id="removeScoreById">
+        delete from score
+        where score_id in <foreach collection="list" item="id" open="(" close=")" separator=",">#{id}</foreach>
+    </delete>
 
     <select id="selectScoreList" resultMap="ScoreResult">
         <include refid="selectAll"/>
         where com_del=0
         <if test="comId!=null and comId!=''">and a.com_id=#{comId}</if>
+    </select>
+    <select id="selectScoreById" resultMap="ScoreResult">
+        <include refid="selectAll"/>
+        where score_id=#{id}
     </select>
 </mapper>

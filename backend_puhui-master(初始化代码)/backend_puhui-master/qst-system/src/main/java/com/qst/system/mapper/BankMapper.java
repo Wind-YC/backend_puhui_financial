@@ -7,7 +7,7 @@ import java.util.List;
 
 @Mapper
 public interface BankMapper {
-    List<Bank> selectBankList();
+    List<Bank> selectBankList(Bank bank);
     int addBank(Bank bank);
     int removeBankById(List<Integer> ids);
     Bank selectBankById(Integer id);

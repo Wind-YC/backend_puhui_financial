@@ -1,66 +1,84 @@
 package com.qst.system.domain;
 
-
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.qst.common.core.domain.BaseEntity;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
 
-public class Loans {
+@ApiModel("贷款类")
+public class Loans extends BaseEntity {
 
-  @ApiModelProperty(value = "id")
+  private static final long serialVersionUID=1L;
+  @ApiModelProperty("主键")
   private Integer loaId;
-
-  @ApiModelProperty(value = "贷款编号")
+  @ApiModelProperty("贷款编号")
   private String loaNo;
-
-  @ApiModelProperty(value = "企业ID")
+  @ApiModelProperty("贷款企业编号")
   private String loaComNo;
 
-  @ApiModelProperty(value = "银行id")
+  @ApiModelProperty("贷款银行ID")
   private Integer loaBankId;
-
-  @ApiModelProperty(value = "贷款期限")
+  @ApiModelProperty("贷款期限")
   private Integer loaLisId;
-
-  @ApiModelProperty(value = "贷款用途")
+  @ApiModelProperty("贷款用途")
   private String loaUse;
-
-  @ApiModelProperty(value = "贷款积分")
+  @ApiModelProperty("贷款积分")
   private String loaIntegral;
-
-  @ApiModelProperty(value = "贷款利率")
+  @ApiModelProperty("贷款利率")
   private String loaRate;
-
-  @ApiModelProperty(value = "贷款状态")
+  @ApiModelProperty("贷款状态")
   private String loaState;
-
-  @ApiModelProperty(value = "贷款时间")
+  @ApiModelProperty("贷款时间")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private Date loaTime;
-
-  @ApiModelProperty(value = "贷款金额")
+  @ApiModelProperty("贷款金额")
   private Integer loaMoney;
-
-  @ApiModelProperty(value = "到期时间")
+  @ApiModelProperty("还款时间")
+  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
   private Date loaEndTime;
-
-  @ApiModelProperty(value = "删除标识")
+  @ApiModelProperty("删除标识")
   private String loaDel;
-
-  @ApiModelProperty(value = "收款账户")
+  @ApiModelProperty("收款账户")
   private String bAccountNo;
-
-  @ApiModelProperty(value = "收款人")
+  @ApiModelProperty("收款人")
   private String bName;
-
-  @ApiModelProperty(value = "开户行")
+  @ApiModelProperty("开户行")
   private String bBankName;
-
-  @ApiModelProperty(value = "身份证号")
+  @ApiModelProperty("身份证号")
   private String bIdcard;
-
-  @ApiModelProperty(value = "签约材料")
+  @ApiModelProperty("签约材料")
   private String loaSign;
 
+  private Company company;
+  private Bank bank;
+
+  @Override
+  public String toString() {
+    return "Loans{" +
+            "loaId=" + loaId +
+            ", loaNo='" + loaNo + '\'' +
+            ", loaComNo='" + loaComNo + '\'' +
+            ", loaBankId=" + loaBankId +
+            ", loaLisId=" + loaLisId +
+            ", loaUse='" + loaUse + '\'' +
+            ", loaIntegral='" + loaIntegral + '\'' +
+            ", loaRate='" + loaRate + '\'' +
+            ", loaState='" + loaState + '\'' +
+            ", loaTime=" + loaTime +
+            ", loaMoney=" + loaMoney +
+            ", loaEndTime=" + loaEndTime +
+            ", loaDel='" + loaDel + '\'' +
+            ", bAccountNo='" + bAccountNo + '\'' +
+            ", bName='" + bName + '\'' +
+            ", bBankName='" + bBankName + '\'' +
+            ", bIdcard='" + bIdcard + '\'' +
+            ", loaSign='" + loaSign + '\'' +
+            ", company=" + company +
+            ", bank=" + bank +
+            '}';
+  }
 
   public Integer getLoaId() {
     return loaId;
@@ -206,27 +224,19 @@ public class Loans {
     this.loaSign = loaSign;
   }
 
-  @Override
-  public String toString() {
-    return "Loans{" +
-            "loaId=" + loaId +
-            ", loaNo='" + loaNo + '\'' +
-            ", loaComNo='" + loaComNo + '\'' +
-            ", loaBankId=" + loaBankId +
-            ", loaLisId=" + loaLisId +
-            ", loaUse='" + loaUse + '\'' +
-            ", loaIntegral='" + loaIntegral + '\'' +
-            ", loaRate='" + loaRate + '\'' +
-            ", loaState='" + loaState + '\'' +
-            ", loaTime=" + loaTime +
-            ", loaMoney=" + loaMoney +
-            ", loaEndTime=" + loaEndTime +
-            ", loaDel='" + loaDel + '\'' +
-            ", bAccountNo='" + bAccountNo + '\'' +
-            ", bName='" + bName + '\'' +
-            ", bBankName='" + bBankName + '\'' +
-            ", bIdcard='" + bIdcard + '\'' +
-            ", loaSign='" + loaSign + '\'' +
-            '}';
+  public Company getCompany() {
+    return company;
+  }
+
+  public void setCompany(Company company) {
+    this.company = company;
+  }
+
+  public Bank getBank() {
+    return bank;
+  }
+
+  public void setBank(Bank bank) {
+    this.bank = bank;
   }
 }

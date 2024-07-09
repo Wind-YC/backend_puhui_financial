@@ -121,7 +121,22 @@
 
     <select id="selectBankList" resultMap="BankResult">
         <include refid="selectAll"/>
-        where bank_del = 0
+            <where>
+                <if test="bankId != null and bankId != ''">AND bank_id = #{bankId}</if>
+                <if test="bankName != null and bankName != ''">AND bank_name = #{bankName}</if>
+                <if test="bankEmail != null and bankEmail != ''">AND bank_email = #{bankEmail}</if>
+                <if test="bankPassword != null and bankPassword != ''">AND bank_password = #{bankPassword}</if>
+                <if test="bankRate != null">AND bank_rate = #{bankRate}</if>
+                <if test="bankPhone != null and bankPhone != ''">AND bank_phone = #{bankPhone}</if>
+                <if test="bankLength != null">AND bank_length = #{bankLength}</if>
+                <if test="bankProId != null and bankProId != ''">AND bank_pro_id = #{bankProId}</if>
+                <if test="bankCitId != null and bankCitId != ''">AND bank_cit_id = #{bankCitId}</if>
+                <if test="bankAraId != null and bankAraId != ''">AND bank_ara_id = #{bankAraId}</if>
+                <if test="bankAdress != null and bankAdress != ''">AND bank_adress = #{bankAdress}</if>
+                <if test="bankBz != null and bankBz != ''">AND bank_bz = #{bankBz}</if>
+                and bank_del=0
+            </where>
+
     </select>
     <select id="selectBankById" resultMap="BankResult">
         <include refid="selectAll"/>

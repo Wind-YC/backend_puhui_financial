@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qst.system.mapper.OverdueMapper">
+    <resultMap id="OverdueResult" type="Overdue">
+        <id column="ove_id" property="oveId"/>
+        <result column="ove_com_no" property="oveComNo"/>
+        <result column="ove_loa_id" property="oveLoaId"/>
+        <result column="ove_money" property="oveMoney"/>
+        <result column="ove_start_time" property="oveStartTime"/>
+        <result column="ove_last_time"  property="oveLastTime"/>
+        <result column="ove_cut_count" property="oveCutCount"/>
+        <result column="ove_add_int" property="oveAddInt"/>
+        <result column="ove_del" property="oveDel"/>
+        <association property="company" javaType="Company" resultMap="CompanyResult"/>
+        <association property="loans" javaType="Loans" resultMap="LoansResult"/>
+    </resultMap>
+    <resultMap id="LoansResult" type="Loans">
+        <result property="loaId" column="loa_id"/>
+        <result property="loaNo" column="loa_no"/>
+        <result property="loaComNo" column="loa_com_no"/>
+        <result property="loaBankId" column="loa_bank_id"/>
+        <result property="loaLisId" column="loa_lis_id"/>
+        <result property="loaUse" column="loa_use"/>
+        <result property="loaIntegral" column="loa_integral"/>
+        <result property="loaRate" column="loa_rate"/>
+        <result property="loaState" column="loa_state"/>
+        <result property="loaTime" column="loa_time"/>
+        <result property="loaMoney" column="loa_money"/>
+        <result property="loaEndTime" column="loa_end_time"/>
+        <result property="loaDel" column="loa_del"/>
+        <result property="bAccountNo" column="b_account_no"/>
+        <result property="bName" column="b_name"/>
+        <result property="bBankName" column="b_bank_name"/>
+        <result property="bIdcard" column="b_idcard"/>
+        <result property="loaSign" column="loa_sign"/>
+    </resultMap>
+    <resultMap type="Company" id="CompanyResult">
+        <result property="comId" column="com_id"/>
+        <result property="comNo" column="com_no"/>
+        <result property="comName" column="com_name"/>
+        <result property="comEmail" column="com_email"/>
+        <result property="comPhone" column="com_phone"/>
+        <result property="comPwd" column="com_pwd"/>
+        <result property="comRemark" column="com_remark"/>
+        <result property="comStatus" column="com_status"/>
+    </resultMap>
+    <insert id="insertOverdue" parameterType="Overdue" useGeneratedKeys="true" keyProperty="oveId">
+        insert into overdue (
+        <trim suffixOverrides=",">
+            <if test="oveComNo != null and oveComNo != ''">ove_com_no,</if>
+            <if test="oveLoaId != null">ove_loa_id,</if>
+            <if test="oveMoney != null">ove_money,</if>
+            <if test="oveStartTime != null">ove_start_time,</if>
+            <if test="oveLastTime != null">ove_last_time,</if>
+            <if test="oveCutCount != null">ove_cut_count,</if>
+            <if test="oveAddInt != null">ove_add_int,</if>
+        </trim>
+        ) values (
+        <trim suffixOverrides=",">
+            <if test="oveComNo != null and oveComNo != ''">#{oveComNo},</if>
+            <if test="oveLoaId != null">#{oveLoaId},</if>
+            <if test="oveMoney != null">#{oveMoney},</if>
+            <if test="oveStartTime != null">#{oveStartTime},</if>
+            <if test="oveLastTime != null">#{oveLastTime},</if>
+            <if test="oveCutCount != null">#{oveCutCount},</if>
+            <if test="oveAddInt != null">#{oveAddInt},</if>
+        </trim>
+        )
+
+    </insert>
+    <update id="updateOverdue">
+        update overdue
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="oveComNo != null and oveComNo != ''">ove_com_no=#{oveComNo},</if>
+            <if test="oveLoaId != null">ove_loa_id=#{oveLoaId},</if>
+            <if test="oveMoney != null">ove_money=#{oveMoney},</if>
+            <if test="oveStartTime != null">ove_start_time=#{oveStartTime},</if>
+            <if test="oveLastTime != null">ove_last_time=#{oveLastTime},</if>
+            <if test="oveCutCount != null">ove_cut_count=#{oveCutCount},</if>
+            <if test="oveAddInt != null">ove_add_int=#{oveAddInt},</if>
+        </trim>
+        where ove_id = #{oveId}
+    </update>
+    <delete id="removeOverdueByIds">
+        delete from overdue
+        where ove_id in <foreach collection="list" item="id" open="(" close=")" separator=",">#{id}</foreach>
+    </delete>
+</mapper>

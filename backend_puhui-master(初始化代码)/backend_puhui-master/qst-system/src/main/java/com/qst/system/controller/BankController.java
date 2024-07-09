@@ -19,9 +19,9 @@ public class BankController extends BaseController {
     @Autowired
     private IBankService bankService;
     @RequestMapping("/list")
-    public TableDataInfo BankList(){
+    public TableDataInfo BankList(Bank bank){
         startPage();
-        return getDataTable(bankService.selectBankList());
+        return getDataTable(bankService.selectBankList(bank));
     }
     @PostMapping
     public AjaxResult add(@RequestBody Bank bank){
@@ -38,13 +38,5 @@ public class BankController extends BaseController {
     @PutMapping
     public AjaxResult update(@RequestBody Bank bank){
         return toAjax(bankService.update(bank));
-    }
-    @GetMapping("/export")
-    public AjaxResult export()
-    {
-        startPage();
-        List<Bank> list = bankService.selectBankList();
-        ExcelUtil<Bank> util = new ExcelUtil<>(Bank.class);
-        return util.exportExcel(list, "企业详情数据");
     }
 }

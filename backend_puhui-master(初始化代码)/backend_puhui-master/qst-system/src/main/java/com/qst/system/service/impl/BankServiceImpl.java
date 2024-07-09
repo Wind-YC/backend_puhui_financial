@@ -13,8 +13,8 @@ public class BankServiceImpl implements IBankService {
     @Autowired
     private BankMapper bankMapper;
     @Override
-    public List<Bank> selectBankList() {
-        return bankMapper.selectBankList();
+    public List<Bank> selectBankList(Bank bank) {
+        return bankMapper.selectBankList(bank);
     }
 
     @Override

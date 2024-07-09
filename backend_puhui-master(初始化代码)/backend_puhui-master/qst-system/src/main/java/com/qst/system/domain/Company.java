@@ -44,6 +44,21 @@ public class Company extends BaseEntity {
   @ApiModelProperty(value = "删除状态")
   private String comDel;
 
+  @Override
+  public String toString() {
+    return "Company{" +
+            "comId=" + comId +
+            ", comNo='" + comNo + '\'' +
+            ", comName='" + comName + '\'' +
+            ", comEmail='" + comEmail + '\'' +
+            ", comPhone='" + comPhone + '\'' +
+            ", comPwd='" + comPwd + '\'' +
+            ", comTime=" + comTime +
+            ", comRemark='" + comRemark + '\'' +
+            ", comStatus='" + comStatus + '\'' +
+            ", comDel='" + comDel + '\'' +
+            '}';
+  }
 
   public Integer getComId() {
     return comId;
@@ -123,22 +138,5 @@ public class Company extends BaseEntity {
 
   public void setComDel(String comDel) {
     this.comDel = comDel;
-  }
-
-
-  @Override
-  public String toString() {
-    return "Company{" +
-            "comId=" + comId +
-            ", comNo='" + comNo + '\'' +
-            ", comName='" + comName + '\'' +
-            ", comEmail='" + comEmail + '\'' +
-            ", comPhone='" + comPhone + '\'' +
-            ", comPwd='" + comPwd + '\'' +
-            ", comTime=" + comTime +
-            ", comRemark='" + comRemark + '\'' +
-            ", comStatus='" + comStatus + '\'' +
-            ", comDel='" + comDel + '\'' +
-            '}';
   }
 }

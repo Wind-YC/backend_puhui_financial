@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qst.system.mapper.RefundMapper">
+    <resultMap id="RefundResult" type="Refund">
+        <id column="ref_id" property="refId"/>
+        <result column="ref_com_no" property="refComNo"/>
+        <result column="ref_bank_id" property="refBankId"/>
+        <result column="ref_lo_id" property="refLoId"/>
+        <result column="ref_ove_id" property="refOveId"/>
+        <result column="ref_time" property="refTime"/>
+        <result column="ref_money" property="refMoney"/>
+        <result column="ref_mode" property="refMode"/>
+        <result column="ref_state" property="refState"/>
+        <result column="ref_del" property="refDel"/>
+        <result column="ref_act_time" property="refActTime"/>
+        <association property="company" javaType="Company" resultMap="CompanyResult"/>
+        <association property="bank" javaType="Bank" resultMap="BankResult"/>
+        <association property="loans" javaType="Loans"  resultMap="LoansResult"/>
+        <association property="overdue" javaType="Overdue" resultMap="OverdueResult"/>
+    </resultMap>
+    <resultMap id="LoansResult" type="Loans">
+        <result property="loaId" column="loa_id"/>
+        <result property="loaNo" column="loa_no"/>
+        <result property="loaComNo" column="loa_com_no"/>
+        <result property="loaBankId" column="loa_bank_id"/>
+        <result property="loaLisId" column="loa_lis_id"/>
+        <result property="loaUse" column="loa_use"/>
+        <result property="loaIntegral" column="loa_integral"/>
+        <result property="loaRate" column="loa_rate"/>
+        <result property="loaState" column="loa_state"/>
+        <result property="loaTime" column="loa_time"/>
+        <result property="loaMoney" column="loa_money"/>
+        <result property="loaEndTime" column="loa_end_time"/>
+        <result property="loaDel" column="loa_del"/>
+        <result property="bAccountNo" column="b_account_no"/>
+        <result property="bName" column="b_name"/>
+        <result property="bBankName" column="b_bank_name"/>
+        <result property="bIdcard" column="b_idcard"/>
+        <result property="loaSign" column="loa_sign"/>
+        <association property="company"  javaType="Company" resultMap="CompanyResult"/>
+        <association property="bank" javaType="Bank" resultMap="BankResult"/>
+    </resultMap>
+    <resultMap type="Company" id="CompanyResult">
+        <result property="comId" column="com_id"/>
+        <result property="comNo" column="com_no"/>
+        <result property="comName" column="com_name"/>
+        <result property="comEmail" column="com_email"/>
+        <result property="comPhone" column="com_phone"/>
+        <result property="comPwd" column="com_pwd"/>
+        <result property="comRemark" column="com_remark"/>
+        <result property="comStatus" column="com_status"/>
+    </resultMap>
+    <resultMap type="Bank" id="BankResult">
+        <result property="bankId" column="bank_id"/>
+        <result property="bankName" column="bank_name"/>
+        <result property="bankEmail" column="bank_email"/>
+        <result property="bankPassword" column="bank_password"/>
+        <result property="bankRate" column="bank_rate"/>
+        <result property="bankPhone" column="bank_phone"/>
+        <result property="bankLength" column="bank_length"/>
+        <result property="bankProId" column="bank_pro_id"/>
+        <result property="bankCitId" column="bank_cit_id"/>
+        <result property="bankAraId" column="bank_ara_id"/>
+        <result property="bankAdress" column="bank_adress"/>
+    </resultMap>
+    <resultMap id="OverdueResult" type="Overdue">
+        <id column="ove_id" property="oveId"/>
+        <result column="ove_com_no" property="oveComNo"/>
+        <result column="ove_loa_id" property="oveLoaId"/>
+        <result column="ove_money" property="oveMoney"/>
+        <result column="ove_start_time" property="oveStartTime"/>
+        <result column="ove_last_time" property="oveLastTime"/>
+        <result column="ove_cut_count" property="oveCutCount"/>
+        <result column="ove_add_int" property="oveAddInt"/>
+        <result column="ove_del" property="oveDel"/>
+        <association property="company" javaType="Company" resultMap="CompanyResult"/>
+        <association property="loans" javaType="Loans" resultMap="LoansResult"/>
+    </resultMap>
+    <sql id="selectRefundVo">
+        select
+            ref_id, ref_com_no, ref_bank_id, ref_lo_id, ref_ove_id, ref_time,
+            ref_money, ref_mode, ref_state, ref_act_time,
+            com_id, com_no, com_name,
+            bank_id, bank_name,
+            loa_id, loa_no, loa_com_no, loa_bank_id,
+            ove_id, ove_com_no, ove_loa_id, ove_money, ove_start_time, ove_last_time
+        from refund r
+                 left join company c on r.ref_com_no = c.com_id
+                 left join bank b on r.ref_bank_id = b.bank_id
+                 left join loans l on r.ref_lo_id = l.loa_id
+                 left join overdue o on r.ref_ove_id = o.ove_id
+    </sql>
+    <insert id="add">
+        insert into refund(
+            <trim suffixOverrides=",">
+                <if test="refComNo!=null and refComNo!=''">ref_com_no,</if>
+                <if test="refBankId!=null and refBankId!=''">ref_bank_id,</if>
+                <if test="refLoId!=null and refLoId!=''">ref_lo_id,</if>
+                <if test="refTime!=null">ref_time,</if>
+                <if test="refMoney!=null and refMoney!=''">ref_money,</if>
+                <if test="refMode!=null and refMode!=''">ref_mode,</if>
+                <if test="refState!=null and refState!=''">ref_state,</if>
+                <if test="refActTime!=null">ref_act_time,</if>
+                <if test="refOveId!=null">ref_ove_id,</if>
+            </trim>
+        )values (
+            <trim suffixOverrides=",">
+                <if test="refComNo!=null and refComNo!=''">#{refComNo},</if>
+                <if test="refBankId!=null and refBankId!=''">#{refBankId},</if>
+                <if test="refLoId!=null and refLoId!=''">#{refLoId},</if>
+                <if test="refTime!=null">#{refTime},</if>
+                <if test="refMoney!=null and refMoney!=''">#{refMoney},</if>
+                <if test="refMode!=null and refMode!=''">#{refMode},</if>
+                <if test="refState!=null and refState!=''">#{refState},</if>
+                <if test="refActTime!=null">#{refActTime},</if>
+                <if test="refOveId!=null">#{refOveId},</if>
+            </trim>
+        )
+    </insert>
+    <update id="updateRef">
+        update refund
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="refComNo!=null and refComNo!=''">ref_com_no=#{refComNo},</if>
+            <if test="refBankId!=null and refBankId!=''">ref_com_no=#{refBankId},</if>
+            <if test="refLoId!=null and refLoId!=''">ref_lo_id=#{refLoId},</if>
+            <if test="refTime!=null">ref_time=#{refTime},</if>
+            <if test="refMoney!=null and refMoney!=''">ref_money=#{refMoney},</if>
+            <if test="refMode!=null and refMode!=''">ref_mode=#{refMode},</if>
+            <if test="refState!=null and refState!=''">ref_state=#{refState},</if>
+            <if test="refActTime!=null">ref_act_time=#{refActTime},</if>
+            ref_ove_id=#{refOveId},
+        </trim>
+        where ref_id=#{refId}
+    </update>
+    <delete id="deleteRefByIds">
+        delete from refund
+        where ref_id in <foreach collection="list" item="id" open="(" close=")" separator=",">#{id}</foreach>
+    </delete>
+    <select id="selectRefundList" resultMap="RefundResult">
+        <include refid="selectRefundVo"/>
+        <where>
+            <if test="refId != null and refId != ''">and ref_id = #{refId}</if>
+            <if test="refComNo != null and refComNo != ''">and ref_com_no = #{refComNo}</if>
+            <if test="refBankId != null and refBankId != ''">and ref_bank_id = #{refBankId}</if>
+            <if test="refLoId != null and refLoId != ''">and ref_lo_id = #{refLoId}</if>
+            <if test="refOveId != null and refOveId != ''">and ref_ove_id = #{refOveId}</if>
+            <if test="refTime != null">and ref_time = #{refTime}</if>
+            <if test="refMoney != null">and ref_money = #{refMoney}</if>
+            <if test="refMode != null and refMode != ''">and ref_mode = #{refMode}</if>
+            <if test="refState != null and refState != ''">and ref_state = #{refState}</if>
+            <if test="refActTime != null">and ref_act_time = #{refActTime}</if>
+            and ref_del=0
+        </where>
+
+    </select>
+    <select id="selectRefByIds" resultMap="RefundResult">
+        <include refid="selectRefundVo"/>
+        <where>
+            ref_del=0 and ref_id in <foreach collection="list" item="id" open="(" close=")" separator=",">#{id}</foreach>
+        </where>
+    </select>
+
+
+</mapper>

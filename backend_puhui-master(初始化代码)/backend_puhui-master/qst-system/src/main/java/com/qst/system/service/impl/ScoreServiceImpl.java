@@ -21,4 +21,19 @@ public class ScoreServiceImpl implements IScoreService {
     public int addScore(Score score) {
         return scoreMapper.addScore(score);
     }
+
+    @Override
+    public int removeScoreByIds(List<Integer> ids) {
+        return scoreMapper.removeScoreById(ids);
+    }
+
+    @Override
+    public Score selectScoreById(Integer id) {
+        return scoreMapper.selectScoreById(id);
+    }
+
+    @Override
+    public int update(Score score) {
+        return scoreMapper.update(score);
+    }
 }

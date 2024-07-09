@@ -7,4 +7,7 @@ import java.util.List;
 public interface IScoreService {
     List<Score> selectScoreList(Score score);
     int addScore(Score score);
+    int removeScoreByIds(List<Integer> ids);
+    Score selectScoreById(Integer id);
+    int update(Score score);
 }
