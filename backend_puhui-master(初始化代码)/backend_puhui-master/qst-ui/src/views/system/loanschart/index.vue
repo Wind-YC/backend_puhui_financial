@@ -128,7 +128,7 @@ import {getDetailsCompanyName} from "@/api/system/details";
 					var data = [];
 					for(var i=0;i<this.loansList.length;i++){//如果时间不在范围内，则不加入data
 						var time = new Date(this.loansList[i].loaTime);
-
+						console.log(this.loansList[i]);
 						if(time>=startTime&&time<=endTime){
 							data.push(this.loansList[i]);
 						}

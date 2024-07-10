@@ -44,6 +44,24 @@
         <result property="comRemark" column="com_remark"/>
         <result property="comStatus" column="com_status"/>
     </resultMap>
+
+    <sql id="selectOveVo">
+        select ove_id,
+            ove_com_no,
+            ove_loa_id,
+            ove_money,
+            ove_start_time,
+            ove_last_time,
+            ove_cut_count,
+            ove_add_int,
+            c.com_name,
+            l.loa_no
+        from overdue as o
+            left join company as c on o.ove_com_no=c.com_id
+            left join loans as l on o.ove_loa_id=loa_id
+
+    </sql>
+
     <insert id="insertOverdue" parameterType="Overdue" useGeneratedKeys="true" keyProperty="oveId">
         insert into overdue (
         <trim suffixOverrides=",">
@@ -85,4 +103,22 @@
         delete from overdue
         where ove_id in <foreach collection="list" item="id" open="(" close=")" separator=",">#{id}</foreach>
     </delete>
+    <select id="selectOveList" resultMap="OverdueResult">
+        <include refid="selectOveVo"/>
+        <where>
+            <if test="oveComNo != null and oveComNo != ''">and ove_com_no=#{oveComNo}</if>
+            <if test="oveLoaId != null">and ove_loa_id=#{oveLoaId}</if>
+            <if test="oveMoney != null">and ove_money=#{oveMoney}</if>
+            <if test="oveStartTime != null">and ove_start_time=#{oveStartTime}</if>
+            <if test="oveLastTime != null">and ove_last_time=#{oveLastTime}</if>
+            <if test="oveCutCount != null">and ove_cut_count=#{oveCutCount}</if>
+            <if test="oveAddInt != null">and ove_add_int=#{oveAddInt}</if>
+            and ove_del=0
+        </where>
+
+    </select>
+    <select id="selectOveById" resultMap="OverdueResult">
+        <include refid="selectOveVo"/>
+        where ove_id=#{oveId} and ove_del=0
+    </select>
 </mapper>

@@ -8,7 +8,9 @@ import java.util.List;
 
 @Mapper
 public interface OverdueMapper {
+    List<Overdue> selectOveList(Overdue overdue);
     int insertOverdue(Overdue overdue);
     int removeOverdueByIds(List<Integer> ids);
     int updateOverdue(Overdue overdue);
+    Overdue selectOveById(Integer id);
 }

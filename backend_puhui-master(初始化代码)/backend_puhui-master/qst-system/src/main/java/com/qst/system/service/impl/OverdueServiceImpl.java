@@ -12,6 +12,13 @@ import java.util.List;
 public class OverdueServiceImpl implements IOverdueService {
     @Autowired
     private OverdueMapper overdueMapper;
+
+    @Override
+    public List<Overdue> selectOveList(Overdue overdue) {
+
+        return overdueMapper.selectOveList(overdue);
+    }
+
     @Override
     public int insertOverdue(Overdue overdue) {
         return overdueMapper.insertOverdue(overdue);
@@ -25,5 +32,10 @@ public class OverdueServiceImpl implements IOverdueService {
     @Override
     public int updateOverdue(Overdue overdue) {
         return overdueMapper.updateOverdue(overdue);
+    }
+
+    @Override
+    public Overdue selectOveById(Integer id) {
+        return overdueMapper.selectOveById(id);
     }
 }

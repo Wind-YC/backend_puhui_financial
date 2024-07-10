@@ -14,5 +14,6 @@ public interface LoansMapper {
     Loans selectLoansById(Integer loansId);
 
     int insertLoans(Loans loans);
+    Loans selectLoansByNo(String no);
 
 }

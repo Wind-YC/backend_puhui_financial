@@ -21,22 +21,22 @@ public class BankSend extends BaseEntity
 
   /** 主键 */
   @ApiModelProperty("编号")
-  private Long senId;
+  private Integer senId;
 
   /** 银行ID */
   @ApiModelProperty("银行ID")
   @Excel(name = "银行ID")
-  private Long senBankId;
+  private Integer senBankId;
 
   /** 贷款ID */
   @ApiModelProperty("贷款ID")
   @Excel(name = "贷款ID")
-  private Long senLoaId;
+  private Integer senLoaId;
 
   /** 企业ID */
   @ApiModelProperty("企业ID")
   @Excel(name = "企业ID")
-  private Long senComId;
+  private Integer senComId;
 
   /** 放款账号 */
   @ApiModelProperty("放款账号")
@@ -83,105 +83,60 @@ public class BankSend extends BaseEntity
   private Loans loans;
 
   private Bank bank;
+  private Idcard idcard;
 
-  public void setSenId(Long senId)
-  {
+  @Override
+  public String toString() {
+    return "BankSend{" +
+            "senId=" + senId +
+            ", senBankId=" + senBankId +
+            ", senLoaId=" + senLoaId +
+            ", senComId=" + senComId +
+            ", senAccount='" + senAccount + '\'' +
+            ", senUname='" + senUname + '\'' +
+            ", senUid='" + senUid + '\'' +
+            ", senMoney='" + senMoney + '\'' +
+            ", senTime=" + senTime +
+            ", senMode='" + senMode + '\'' +
+            ", senStatus='" + senStatus + '\'' +
+            ", senDel='" + senDel + '\'' +
+            ", company=" + company +
+            ", loans=" + loans +
+            ", bank=" + bank +
+            ", idcard=" + idcard +
+            '}';
+  }
+
+  public Integer getSenId() {
+    return senId;
+  }
+
+  public void setSenId(Integer senId) {
     this.senId = senId;
   }
 
-  public Long getSenId()
-  {
-    return senId;
+  public Integer getSenBankId() {
+    return senBankId;
   }
-  public void setSenBankId(Long senBankId)
-  {
+
+  public void setSenBankId(Integer senBankId) {
     this.senBankId = senBankId;
   }
 
-  public Long getSenBankId()
-  {
-    return senBankId;
+  public Integer getSenLoaId() {
+    return senLoaId;
   }
-  public void setSenLoaId(Long senLoaId)
-  {
+
+  public void setSenLoaId(Integer senLoaId) {
     this.senLoaId = senLoaId;
   }
 
-  public Long getSenLoaId()
-  {
-    return senLoaId;
-  }
-  public void setSenComId(Long senComId)
-  {
-    this.senComId = senComId;
-  }
-
-  public Long getSenComId()
-  {
+  public Integer getSenComId() {
     return senComId;
   }
-  public void setSenUname(String senUname)
-  {
-    this.senUname = senUname;
-  }
 
-  public String getSenUname()
-  {
-    return senUname;
-  }
-  public void setSenUid(String senUid)
-  {
-    this.senUid = senUid;
-  }
-
-  public String getSenUid()
-  {
-    return senUid;
-  }
-  public void setSenMoney(String senMoney)
-  {
-    this.senMoney = senMoney;
-  }
-
-  public String getSenMoney()
-  {
-    return senMoney;
-  }
-  public void setSenTime(Date senTime)
-  {
-    this.senTime = senTime;
-  }
-
-  public Date getSenTime()
-  {
-    return senTime;
-  }
-  public void setSenMode(String senMode)
-  {
-    this.senMode = senMode;
-  }
-
-  public String getSenMode()
-  {
-    return senMode;
-  }
-  public void setSenStatus(String senStatus)
-  {
-    this.senStatus = senStatus;
-  }
-
-  public String getSenStatus()
-  {
-    return senStatus;
-  }
-  public void setSenDel(String senDel)
-  {
-    this.senDel = senDel;
-  }
-
-  public String getSenDel()
-  {
-    return senDel;
+  public void setSenComId(Integer senComId) {
+    this.senComId = senComId;
   }
 
   public String getSenAccount() {
@@ -190,6 +145,62 @@ public class BankSend extends BaseEntity
 
   public void setSenAccount(String senAccount) {
     this.senAccount = senAccount;
+  }
+
+  public String getSenUname() {
+    return senUname;
+  }
+
+  public void setSenUname(String senUname) {
+    this.senUname = senUname;
+  }
+
+  public String getSenUid() {
+    return senUid;
+  }
+
+  public void setSenUid(String senUid) {
+    this.senUid = senUid;
+  }
+
+  public String getSenMoney() {
+    return senMoney;
+  }
+
+  public void setSenMoney(String senMoney) {
+    this.senMoney = senMoney;
+  }
+
+  public Date getSenTime() {
+    return senTime;
+  }
+
+  public void setSenTime(Date senTime) {
+    this.senTime = senTime;
+  }
+
+  public String getSenMode() {
+    return senMode;
+  }
+
+  public void setSenMode(String senMode) {
+    this.senMode = senMode;
+  }
+
+  public String getSenStatus() {
+    return senStatus;
+  }
+
+  public void setSenStatus(String senStatus) {
+    this.senStatus = senStatus;
+  }
+
+  public String getSenDel() {
+    return senDel;
+  }
+
+  public void setSenDel(String senDel) {
+    this.senDel = senDel;
   }
 
   public Company getCompany() {
@@ -216,26 +227,11 @@ public class BankSend extends BaseEntity
     this.bank = bank;
   }
 
-  @Override
-  public String toString() {
-    return "BankSend{" +
-            "senId=" + senId +
-            ", senBankId=" + senBankId +
-            ", senLoaId=" + senLoaId +
-            ", senComId=" + senComId +
-            ", senAccount='" + senAccount + '\'' +
-            ", senUname='" + senUname + '\'' +
-            ", senUid='" + senUid + '\'' +
-            ", senMoney='" + senMoney + '\'' +
-            ", senTime=" + senTime +
-            ", senMode='" + senMode + '\'' +
-            ", senStatus='" + senStatus + '\'' +
-            ", senDel='" + senDel + '\'' +
-            ", company=" + company +
-            ", loans=" + loans +
-            ", bank=" + bank +
-            '}';
+  public Idcard getIdcard() {
+    return idcard;
   }
 
-
+  public void setIdcard(Idcard idcard) {
+    this.idcard = idcard;
+  }
 }

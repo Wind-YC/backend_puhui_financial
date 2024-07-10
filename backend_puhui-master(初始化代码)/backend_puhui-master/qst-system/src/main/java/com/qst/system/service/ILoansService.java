@@ -14,4 +14,5 @@ public interface ILoansService {
     public Loans selectLoansById(Integer loansId);
 
     public int insertLoans(Loans loans);
+    Loans selectLoansByNo(String no);
 }

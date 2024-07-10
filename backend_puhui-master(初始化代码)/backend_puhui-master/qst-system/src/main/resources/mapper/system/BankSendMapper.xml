@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qst.system.mapper.BankSendMapper">
+    <resultMap id="BankSendResult" type="BankSend">
+        <id column="sen_id" property="senId"/>
+        <result column="sen_bank_id" property="senBankId"/>
+        <result column="sen_loa_id" property="senLoaId"/>
+        <result column="sen_com_id" property="senComId"/>
+        <result column="sen_account" property="senAccount"/>
+        <result column="sen_uname" property="senUname"/>
+        <result column="sen_uid" property="senUid"/>
+        <result column="sen_money" property="senMoney"/>
+        <result column="sen_time" property="senTime"/>
+        <result column="sen_mode" property="senMode"/>
+        <result column="sen_status" property="senStatus"/>
+        <association property="bank" javaType="Bank" resultMap="BankResult"/>
+        <association property="loans" javaType="Loans" resultMap="LoansResult"/>
+        <association property="company" javaType="Company" resultMap="CompanyResult"/>
+        <association property="idcard" javaType="Idcard" resultMap="IdcardResult"/>
+    </resultMap>
+    <resultMap id="CompanyResult" type="Company">
+        <id column="com_id" property="comId"/>
+        <result property="comNo" column="com_no"/>
+        <result property="comName" column="com_name"/>
+        <result property="comEmail" column="com_email"/>
+        <result property="comPhone" column="com_phone"/>
+        <result property="comPwd" column="com_pwd"/>
+        <result property="comRemark" column="com_remark"/>
+        <result property="comStatus" column="com_status"/>
+        <result property="comDel" column="com_del"/>
+    </resultMap>
+    <resultMap id="IdcardResult" type="Idcard">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="idcard" property="idcard"/>
+        <result column="address" property="address"/>
+        <result column="birthday" property="birthday"/>
+        <result column="gender" property="gender"/>
+        <result column="nation" property="nation"/>
+        <result column="com_id" property="comId"/>
+        <result column="period" property="period"/>
+    </resultMap>
+    <resultMap id="LoansResult" type="Loans">
+        <result property="loaId" column="loa_id"/>
+        <result property="loaNo" column="loa_no"/>
+        <result property="loaComNo" column="loa_com_no"/>
+        <result property="loaBankId" column="loa_bank_id"/>
+        <result property="loaLisId" column="loa_lis_id"/>
+        <result property="loaUse" column="loa_use"/>
+        <result property="loaIntegral" column="loa_integral"/>
+        <result property="loaRate" column="loa_rate"/>
+        <result property="loaState" column="loa_state"/>
+        <result property="loaTime" column="loa_time"/>
+        <result property="loaMoney" column="loa_money"/>
+        <result property="loaEndTime" column="loa_end_time"/>
+        <result property="loaDel" column="loa_del"/>
+        <result property="bAccountNo" column="b_account_no"/>
+        <result property="bName" column="b_name"/>
+        <result property="bBankName" column="b_bank_name"/>
+        <result property="bIdcard" column="b_idcard"/>
+        <result property="loaSign" column="loa_sign"/>
+        <association property="company" javaType="Company" resultMap="CompanyResult"/>
+        <association property="bank"  javaType="Bank" resultMap="BankResult"/>
+    </resultMap>
+    <resultMap id="BankResult" type="bank">
+        <id column="bank_id" property="bankId"/>
+        <result column="bank_name" property="bankName"/>
+        <result column="bank_email" property="bankEmail"/>
+        <result column="bank_password" property="bankPassword"/>
+        <result column="bank_rate" property="bankRate"/>
+        <result column="bank_phone" property="bankPhone"/>
+        <result column="bank_length" property="bankLength"/>
+        <result column="bank_pro_id" property="bankProId"/>
+        <result column="bank_cit_id" property="bankCitId"/>
+        <result column="bank_ara_id" property="bankAraId"/>
+        <result column="bank_adress" property="bankAdress"/>
+        <result column="bank_del" property="bankDel"/>
+        <result column="bank_bz" property="bankBz"/>
+        <association property="provinces" javaType="Provinces">
+            <id column="id" property="id"/>
+            <result column="provinceid" property="provinceid"/>
+            <result column="province" property="province"/>
+        </association>
+        <association property="cities" javaType="Cities">
+            <id column="id" property="id"/>
+            <result column="cityid" property="cityid"/>
+            <result column="city" property="city"/>
+            <result column="provinceid" property="provinceid"/>
+        </association>
+        <association property="areas" javaType="Areas">
+            <id column="id" property="id"/>
+            <result column="areaid" property="areaid"/>
+            <result column="area" property="area"/>
+            <result column="cityid" property="cityid"/>
+        </association>
+
+    </resultMap>
+
+    <sql id="selectAllBankSendVo">
+        select sen_id,
+               sen_bank_id,
+               sen_loa_id,
+               sen_com_id,
+               sen_account,
+               sen_uname,
+               sen_uid,
+               sen_money,
+               sen_time,
+               sen_mode,
+               sen_status,
+               l.loa_no,
+               b.bank_name,
+               c.com_name
+        from bank_send as bs
+            left join bank as b on bs.sen_bank_id=b.bank_id
+            left join loans l on bs.sen_loa_id = l.loa_id
+            left join company c on bs.sen_com_id=c.com_id
+    </sql>
+    <insert id="addBankSend">
+        insert into bank_send(
+                <trim suffixOverrides=",">
+                    <if test="senBankId!=null and senBankId!=''">sen_bank_id,</if>
+                    <if test="senLoaId!=null and senLoaId!=''">sen_loa_id,</if>
+                    <if test="senComId!=null and senComId!=''">sen_com_id,</if>
+                    <if test="senAccount!=null and senAccount!=''">sen_account,</if>
+                    <if test="senUname!=null and senUname!=''">sen_uname,</if>
+                    <if test="senUid!=null and senUid!=''">sen_uid,</if>
+                    <if test="senMoney!=null and senMoney!=''">sen_money,</if>
+                    <if test="senTime!=null">sen_time,</if>
+                    <if test="senMode!=null and senMode!=''">sen_mode,</if>
+                </trim>
+        )values (
+                <trim suffixOverrides=",">
+                    <if test="senBankId!=null and senBankId!=''">#{senBankId},</if>
+                    <if test="senLoaId!=null and senLoaId!=''">#{senLoaId},</if>
+                    <if test="senComId!=null and senComId!=''">#{senComId},</if>
+                    <if test="senAccount!=null and senAccount!=''">#{senAccount},</if>
+                    <if test="senUname!=null and senUname!=''">#{senUname},</if>
+                    <if test="senUid!=null and senUid!=''">#{senUid},</if>
+                    <if test="senMoney!=null and senMoney!=''">#{senMoney},</if>
+                    <if test="senTime!=null">#{senTime},</if>
+                    <if test="senMode!=null and senMode!=''">#{senMode},</if>
+                </trim>
+                )
+    </insert>
+    <update id="updateStatus">
+        update bank_send
+        SET sen_status=2
+        where sen_id=#{senId}
+    </update>
+    <update id="update">
+        update bank_send
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="senBankId!=null and senBankId!=''">sen_bank_id=#{senBankId},</if>
+            <if test="senLoaId!=null and senLoaId!=''">sen_loa_id=#{senLoaId},</if>
+            <if test="senComId!=null and senComId!=''">sen_com_id=#{senComId},</if>
+            <if test="senAccount!=null and senAccount!=''">sen_account=#{senAccount},</if>
+            <if test="senUname!=null and senUname!=''">sen_uname=#{senUname},</if>
+            <if test="senUid!=null and senUid!=''">sen_uid=#{senUid},</if>
+            <if test="senMoney!=null and senMoney!=''">sen_money=#{senMoney},</if>
+            <if test="senTime!=null">sen_time=#{senTime},</if>
+            <if test="senMode!=null and senMode!=''">sen_mode=#{senMode},</if>
+        </trim>
+        where sen_id=#{senId}
+    </update>
+    <delete id="delete">
+        delete from bank_send
+        where sen_id in <foreach collection="list" item="id" open="(" close=")" separator=",">#{id}</foreach>
+    </delete>
+
+    <select id="selectBankSendList" resultMap="BankSendResult">
+        <include refid="selectAllBankSendVo"/>
+        <where>
+            <if test="senId!=null and senId!=''">and sen_id=#{senId}</if>
+            <if test="senBankId!=null and senBankId!=''">and sen_bank_id=#{senBankId}</if>
+            <if test="senLoaId!=null and senLoaId!=''">and sen_loa_id=#{senLoaId}</if>
+            <if test="senComId!=null and senComId!=''">and sen_com_id=#{senComId}</if>
+            <if test="senAccount!=null and senAccount!=''">and sen_account=#{senAccount}</if>
+            <if test="senUname!=null and senUname!=''">and sen_uname=#{senUname}</if>
+            <if test="senUid!=null and senUid!=''">and sen_uid=#{senUid}</if>
+            <if test="senMoney!=null and senMoney!=''">and sen_money=#{senMoney}</if>
+            <if test="senTime!=null">and sen_time=#{senTime}</if>
+            <if test="senMode!=null and senMode!=''">and sen_mode=#{senMode}</if>
+            <if test="senStatus!=null and senStatus!=''">and sen_status=#{senStatus}</if>
+            and sen_del = 0
+        </where>
+
+    </select>
+    <select id="selectBankSendById" resultMap="BankSendResult">
+        <include refid="selectAllBankSendVo"/>
+        where sen_id = #{senId}
+    </select>
+</mapper>

@@ -140,4 +140,8 @@
         <include refid="selectLoansVo"/>
         where loa_id = #{loansId}
     </select>
+    <select id="selectLoansByNo" resultMap="LoansResult">
+        <include refid="selectLoansVo"/>
+            where loa_no=#{no}
+    </select>
 </mapper>

@@ -37,4 +37,10 @@ public class LoansServiceImpl implements ILoansService {
         return loansMapper.insertLoans(loans);
     }
 
+    @Override
+    public Loans selectLoansByNo(String no) {
+
+        return loansMapper.selectLoansByNo(no);
+    }
+
 }
